@@ -1,5 +1,25 @@
-income = 0
-expense = 0
+import json
+
+# Load existing data
+try:
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        income = data["income"]
+        expense = data["expense"]
+except:
+    income = 0
+    expense = 0
+
+
+# Save function
+def save_data():
+    data = {
+        "income": income,
+        "expense": expense
+    }
+    with open("data.json", "w") as file:
+        json.dump(data, file)
+
 
 while True:
     print("\n===== EXPENSE TRACKER =====")
@@ -13,22 +33,23 @@ while True:
     if choice == "1":
         amt = int(input("Enter income amount: "))
         income += amt
+        save_data()
         print("Income added successfully!")
 
     elif choice == "2":
         amt = int(input("Enter expense amount: "))
         expense += amt
+        save_data()
         print("Expense added successfully!")
 
     elif choice == "3":
-        balance = income - expense
         print("\n----- SUMMARY -----")
         print("Total Income:", income)
         print("Total Expense:", expense)
-        print("Balance:", balance)
+        print("Balance:", income - expense)
 
     elif choice == "4":
-        print("Exiting... Thank you bro!")
+        print("Exiting... Bye bro!")
         break
 
     else:
